@@ -1,3 +1,5 @@
+mod plugin_host;
+
 #[macro_use] extern crate rocket;
 use rocket::http::{ContentType, Status};
 use rocket::serde::{Serialize, json::Json};
@@ -26,6 +28,9 @@ fn status() -> Json<MirageStatus> {
 
 #[launch]
 fn rocket() -> rocket::Rocket<rocket::Build> {
+    let ph = plugin_host::MiragePluginHost::new();
+    ph.run_plugins();
+
     rocket::build()
         .mount("/", routes![index])
         .mount("/status", routes![status])
