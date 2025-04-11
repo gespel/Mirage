@@ -1,16 +1,16 @@
 mod plugin_host;
 mod status;
-
+#[macro_use]
+extern crate rocket_include_static_resources;
 #[macro_use] extern crate rocket;
-use rocket::http::{ContentType, Status};
-use rocket::serde::{Serialize, json::Json};
+use rocket::serde::{json::Json};
 use rocket_dyn_templates::{context, Template};
 use status::mirage_status::MirageStatus;
 use plugin_host::plugin_host::MiragePluginHost;
 use env_logger::Builder;
 use chrono::Local;
-use log::LevelFilter;
 use std::io::Write;
+use rocket::fs::{relative, FileServer};
 
 #[get("/")]
 fn index() -> Template {
@@ -33,7 +33,7 @@ fn status_page() -> Json<MirageStatus> {
 }
 
 fn build_logger() {
-    let mut builder = Builder::new()
+    Builder::new()
         .format(|buf, record| {
             writeln!(
                 buf,
@@ -50,9 +50,10 @@ fn rocket() -> rocket::Rocket<rocket::Build> {
     build_logger();
     let mut ph = MiragePluginHost::new("plugins");
     ph.run_plugins();
-    log::info!("Loaded {} plugins!", ph.num_active_plugins);
+    log::info!("Loaded {} plugins from {:?}!", ph.num_active_plugins, ph.plugin_dir_path);
     rocket::build()
         .mount("/", routes![index])
+        .mount("/static", FileServer::from(relative!("static")))
         .attach(Template::fairing())
         .mount("/status", routes![status_page])
 }

@@ -1,7 +1,5 @@
-use std::ffi::CString;
 use pyo3::prelude::*;
 use std::fs;
-use std::fs::ReadDir;
 use std::path::PathBuf;
 
 pub struct MiragePluginHost {
@@ -18,6 +16,7 @@ impl MiragePluginHost {
         let mut programs: Vec<String> = Vec::new();
         for entry in plugin_dir_path {
             let entry = entry.expect("unable to read plugins dir entry");
+            log::info!("Running plugin {}", entry.path().display());
             num_active_plugins += 1;
             let p = fs::read_to_string(entry.path()).expect(
                 format!(
@@ -39,9 +38,9 @@ impl MiragePluginHost {
         Python::with_gil(|py| {
             for p in &self.programs {
                 let fun: Py<PyAny> = PyModule::from_code_bound(py, p.as_str(), "", "")
-                    .unwrap()
+                    .expect("Unable to understand the code...")
                     .getattr("run")
-                    .unwrap()
+                    .expect("Unable to get the run function...")
                     .into();
                 fun.call0(py).unwrap();
             }

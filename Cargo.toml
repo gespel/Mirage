@@ -10,3 +10,4 @@ rocket_dyn_templates = { version = "0.2.0", features = ["tera"] }
 env_logger = "0.11.8"
 chrono = "0.4.40"
 log = "0.4.27"
+rocket-include-static-resources = "0.10.5"
