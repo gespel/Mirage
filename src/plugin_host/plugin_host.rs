@@ -34,9 +34,7 @@ impl MiragePluginHost {
 
     pub fn run_plugins(&mut self) {
         Python::with_gil(|py| {
-            for p in self.plugin_dir {
-
-
+            for p in self.programs {
                 let fun: Py<PyAny> = PyModule::from_code_bound(py, p.as_str(), "", "")
                     .unwrap()
                     .getattr("run")
