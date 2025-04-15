@@ -8,7 +8,7 @@
 
     <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
         <div class="text-center">
-            <img class="mb-3 rounded" src="static/output.png" width="250">
+            <img class="mb-3 rounded shadow p-3" style="background-color: #e5e7eb !important;" src="static/output.png" width="250">
             <div class="text-center p-4 shadow rounded mb-3" style="background-color: #e5e7eb !important;">
                 <h3> Welcome to the Mirage frontend {{name}}!</h3>
                 <p>This project is still work in progess</p>
