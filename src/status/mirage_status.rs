@@ -1,3 +1,4 @@
+use rocket::serde::json::Json;
 use rocket::serde::Serialize;
 
 #[derive(Serialize)]
@@ -16,4 +17,14 @@ impl MirageStatus {
             online
         }
     }
+}
+
+#[get("/")]
+pub fn status_page() -> Json<MirageStatus> {
+    let j = MirageStatus::new(
+        "TestServer".to_string(),
+        "healthy".to_string(),
+        true
+    );
+    Json(j)
 }
