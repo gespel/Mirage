@@ -7,6 +7,7 @@ pub type SharedWorker = Arc<Mutex<Vec<Worker>>>;
 #[serde(crate = "rocket::serde")]
 pub struct WorkerInfo {
     pub(crate) master_name: String,
+    pub return_status: String,
 }
 
 #[derive(FromForm, Deserialize)]
