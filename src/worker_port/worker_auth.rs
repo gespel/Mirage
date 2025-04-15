@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use rocket::serde::json::Json;
 use rocket::State;
-use crate::worker_port::worker_info::{Worker, WorkerInfo};
+use crate::worker_port::worker_info::{Worker};
 
 pub type WorkerAuth = Arc<Mutex<HashMap<String, String>>>;
 

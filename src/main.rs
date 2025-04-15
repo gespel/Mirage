@@ -2,32 +2,17 @@ mod plugin_host;
 mod status;
 mod worker_port;
 
-#[macro_use]
-extern crate rocket_include_static_resources;
 #[macro_use] extern crate rocket;
 use std::collections::HashMap;
-use std::convert::Infallible;
-use serde::Deserialize;
-use rocket::serde::{json::Json};
 use rocket_dyn_templates::{context, Template};
-
-use status::mirage_status::MirageStatus;
 use plugin_host::plugin_host::MiragePluginHost;
-use worker_port::worker_info::WorkerInfo;
-
 use env_logger::Builder;
 use chrono::Local;
 use std::io::Write;
 use std::sync::{Arc, Mutex};
 use rocket::fs::{relative, FileServer};
-use rocket::{request, Request, State};
-use rocket::form::Form;
-use rocket::form::name::Key;
-use rocket::http::Status;
-use rocket::request::{FromRequest, Outcome};
-use rocket::response::Responder;
 use crate::worker_port::worker_auth::WorkerAuth;
-use crate::worker_port::worker_info::{SharedWorker, Worker};
+use crate::worker_port::worker_info::{SharedWorker};
 
 #[get("/")]
 fn index() -> Template {
