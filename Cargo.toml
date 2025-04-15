@@ -11,3 +11,4 @@ env_logger = "0.11.8"
 chrono = "0.4.40"
 log = "0.4.27"
 rocket-include-static-resources = "0.10.5"
+serde = { version = "1.0.219", features = ["derive"] }

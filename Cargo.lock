@@ -13,6 +13,7 @@ dependencies = [
  "rocket",
  "rocket-include-static-resources",
  "rocket_dyn_templates",
+ "serde",
 ]
 
 [[package]]
