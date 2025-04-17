@@ -2,10 +2,14 @@ use rocket::serde::json::Json;
 use rocket::State;
 use crate::worker_port::auth;
 use crate::worker_port::auth::WorkerAuth;
-use crate::worker_port::worker_info::{SharedWorker, Worker, WorkerInfo};
+use crate::worker_port::structs::{SharedWorker, Worker, WorkerInfo};
 
 #[post("/<request_type>", data = "<worker_request>")]
-pub fn worker_port_handler(request_type: &str, worker_request: Json<Worker>, workers: &State<SharedWorker>, worker_auth: &State<WorkerAuth>) -> Json<WorkerInfo> {
+pub fn worker_port_handler(
+    request_type: &str, worker_request: Json<Worker>,
+    workers: &State<SharedWorker>,
+    worker_auth: &State<WorkerAuth>
+) -> Json<WorkerInfo> {
     log::debug!("Got a worker port handler type: {} for {} with key {}", request_type, worker_request.worker_name, worker_request.key);
 
     match request_type {
