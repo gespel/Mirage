@@ -1,7 +1,7 @@
 use rocket::serde::json::Json;
 use rocket::State;
-use crate::worker_port::worker_auth;
-use crate::worker_port::worker_auth::WorkerAuth;
+use crate::worker_port::auth;
+use crate::worker_port::auth::WorkerAuth;
 use crate::worker_port::worker_info::{SharedWorker, Worker, WorkerInfo};
 
 #[post("/<request_type>", data = "<worker_request>")]
@@ -18,10 +18,10 @@ pub fn worker_port_handler(request_type: &str, worker_request: Json<Worker>, wor
                 }
             }
 
-            if worker_auth::check_auth(worker_auth, &worker_request) {
+            if auth::check_auth(worker_auth, &worker_request) {
 
             }
-            match worker_auth::check_auth(worker_auth, &worker_request) {
+            match auth::check_auth(worker_auth, &worker_request) {
                 true => {
                     if !contains_worker {
                         worker_list.push(

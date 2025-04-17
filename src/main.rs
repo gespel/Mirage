@@ -11,7 +11,7 @@ use chrono::Local;
 use std::io::Write;
 use std::sync::{Arc, Mutex};
 use rocket::fs::{relative, FileServer};
-use crate::worker_port::worker_auth::WorkerAuth;
+use crate::worker_port::auth::WorkerAuth;
 use crate::worker_port::worker_info::{SharedWorker};
 
 #[get("/")]
